@@ -144,9 +144,30 @@ CONFIG SET requirepass P@ssw0rd
 AUTH P@ssw0rd
 ~~~
 
+
 - Usunięcie hasła
 ~~~
 CONFIG SET requirepass ""
+~~~
+
+
+## Masowe wstawianie danych
+
+- Pobranie danych
+~~~ bash
+curl http://antirez.com/misc/female-names.txt --output female-names.txt
+~~~
+
+
+- Import
+
+~~~ bash
+cat names.txt | redis-cli --pipe
+~~~
+
+- Dostosowanie pliku
+~~~ bash
+sed 's/^/SADD members /' female-names.txt  > names.txt
 ~~~
 
 
