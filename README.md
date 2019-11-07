@@ -977,4 +977,57 @@ cat names.txt | redis-cli --pipe
 
 ## Cluster
 
-https://itsmetommy.com/2018/05/24/docker-compose-redis-cluster/
+1. Utwórz podkatalogi na poszczególnych kontenerów
+
+2. Utwórz w podkatalogu plik _redis.conf_
+~~~
+port 7000
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+appendonly yes
+~~~
+
+3. Utwórz plik _Dockerfile_
+~~~
+FROM redis:latest
+
+EXPOSE 7000
+ADD redis.conf /etc/redis/redis.conf
+#RUN chown redis:redis /etc/redis/redis.conf
+#ADD redis-entrypoint.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/redis-entrypoint.sh
+#ENTRYPOINT ["redis-entrypoint.sh"]
+~~~
+
+i tak dalej w poszczególnych podkatalogach. Pamiętaj o zmianie portów 7000 itd.
+
+4. Uruchom polecenie
+~~~ bash
+docker-compose up --build -d
+~~~
+
+5. Utwórz cluster
+~~~ bash
+docker exec -it redis-1 redis-cli -p 7000 --cluster create 10.0.0.2:7000 10.0.0.3:7001 \
+10.0.0.4:7002 10.0.0.5:7003 10.0.0.6:7004 10.0.0.7:7005 \
+--cluster-replicas 1
+~~~
+
+6. Podłącz się do jednego z masterów
+~~~ bash
+docker exec -it redis-1 redis-cli -c -p 7000
+~~~
+
+7. Utwórz klucze
+~~~
+SET key1 Hello
+SET key2 World
+GET key1
+GET key2
+~~~
+
+8. Posprzątaj po obrazach
+~~~ bash
+docker-compose down
+~~~
