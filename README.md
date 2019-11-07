@@ -158,17 +158,21 @@ CONFIG SET requirepass ""
 curl http://antirez.com/misc/female-names.txt --output female-names.txt
 ~~~
 
-
-- Import
-
-~~~ bash
-cat names.txt | redis-cli --pipe
-~~~
-
 - Dostosowanie pliku
 ~~~ bash
 sed 's/^/SADD members /' female-names.txt  > names.txt
 ~~~
+
+- Skopiowanie pliku do obrazu Dockera
+~~~ bash
+docker cp names.txt zus-redis:/data/names.txt
+~~~
+
+- Import dnaych z pliku do Redisa
+~~~ bash
+cat names.txt | redis-cli --pipe
+~~~
+
 
 
 ## Cluster
