@@ -131,3 +131,20 @@
 | **GEODIST** key member1 member2 [unit] ]| Obliczenie odległości pomiędzy elementami |
 | **GEORADIUS** key longitude latitude radius   | Wyszukiwanie elementów w określonym promieniu od podanej lokalizacji |
 | **GEORADIUSBYMEMBER** key member radius   | Wyszukiwanie elementów w określonym promieniu od podanego elementu |
+
+## Autoryzacja
+
+- Ustawienie hasła
+~~~
+CONFIG SET requirepass P@ssw0rd
+~~~
+
+- Autoryzacja
+~~~
+AUTH P@ssw0rd
+~~~
+
+- Usunięcie hasła
+~~~
+CONFIG SET requirepass ""
+~~~
