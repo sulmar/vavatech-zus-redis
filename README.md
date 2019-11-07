@@ -148,3 +148,8 @@ AUTH P@ssw0rd
 ~~~
 CONFIG SET requirepass ""
 ~~~
+
+
+## Cluster
+
+https://itsmetommy.com/2018/05/24/docker-compose-redis-cluster/
