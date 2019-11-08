@@ -1031,3 +1031,23 @@ GET key2
 ~~~ bash
 docker-compose down
 ~~~
+
+
+# InfluxDb
+
+docker-compose.yml
+~~~
+version: '3'
+services:
+  influxdb:
+    image: influxdb:latest
+    volumes:
+      # Mount for influxdb data directory
+      - ./influxdb/data:/var/lib/influxdb
+      # Mount for influxdb configuration
+      - ./influxdb/config/:/etc/influxdb/
+    ports:
+      # The API for InfluxDB is served on port 8086
+      - "8086:8086"
+      - "8082:8082"
+  ~~~
