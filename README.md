@@ -1051,3 +1051,9 @@ services:
       - "8086:8086"
       - "8082:8082"
   ~~~
+  
+  
+  ## Import
+  ~~~
+  curl https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt -o NOAA_data.txt
+  ~~~
