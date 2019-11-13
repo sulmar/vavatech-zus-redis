@@ -977,6 +977,9 @@ cat names.txt | redis-cli --pipe
 
 ## Cluster
 
+
+https://itsmetommy.com/2018/05/24/docker-compose-redis-cluster/
+
 1. Utwórz podkatalogi na poszczególnych kontenerów
 
 2. Utwórz w podkatalogu plik _redis.conf_
