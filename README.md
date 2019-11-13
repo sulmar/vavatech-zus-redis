@@ -968,7 +968,7 @@ sed 's/^/SADD members /' female-names.txt  > names.txt
 docker cp names.txt zus-redis:/data/names.txt
 ~~~
 
-- Import dnaych z pliku do Redisa
+- Import danych z pliku do Redisa
 ~~~ bash
 cat names.txt | redis-cli --pipe
 ~~~
