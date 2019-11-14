@@ -897,8 +897,6 @@ INCRBY jeny:debet 40
 EXEC 
 ~~~
 
-
-
 - Wycofanie transakcji
 
 ~~~
@@ -908,6 +906,29 @@ DECRBY john:debet 40
 INCRBY jeny:debet 40
 DISCARD 
 ~~~
+
+- Śledzenie zmian klucza
+
+Scenariusz:
+
+1. Użytkownik nr 1 zaczyna wprowadzać zmiany:
+~~~
+MULTI
+WATCH john:debet
+DECRBY john:debet 100
+~~~
+
+2. Użytkownik nr 2 modyfikuje w międzyczasie wartość klucza:
+~~~
+INCRBY john:debet 50
+~~~
+
+3. Użytkownik nr 1 zatwierdza transakcję
+~~~
+EXEC 
+~~~
+
+W przypadku gdy w ktoś w międzyczasie zmienił zawartość obserwowanego klucza, transakcja jest wycofana.
 
 
 ## Skrypt
