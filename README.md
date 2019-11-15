@@ -217,6 +217,60 @@ docker rm zus-redis
 ~~~
 
 
+### Compose
+1. Utwórz folder _redis_
+
+2. Utwórz plik konfiguracyjny _redis/redis.conf_
+~~~
+port 6379
+appendonly yes
+~~~
+
+3. Utwórz plik _redis/Dockerfile_
+
+~~~
+FROM redis:latest
+
+EXPOSE 6379
+ADD redis.conf /etc/redis/redis.conf
+#RUN chown redis:redis /etc/redis/redis.conf
+#ADD redis-entrypoint.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/redis-entrypoint.sh
+#ENTRYPOINT ["redis-entrypoint.sh"]
+~~~
+
+4. Utwórz plik _docker-compose.yaml_
+
+~~~ yaml
+
+version: '3'
+
+networks:
+
+  redisnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/16
+
+services:
+
+  redis-1:
+    container_name: redis
+    build: redis
+    command: redis-server /etc/redis/redis.conf
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.2
+
+~~~
+
+5. Uruchom
+~~~ bash
+docker-compose up --build  -d 
+~~~
+
+
 ## Podstawy
 
 - Sprawdzenie czy serwer działa
