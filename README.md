@@ -988,26 +988,74 @@ W przypadku gdy w ktoś w międzyczasie zmienił zawartość obserwowanego klucz
 ## Skrypt
 
 - Wykonane wyrażenia
-~~~
-EVAL "return redis.call('set','foo', 'Hello')"
+~~~ lua
+EVAL "return redis.call('set','foo', 'Hello')" 0
 EVAL "return redis.call('get','foo')" 0 
 ~~~
 
-- Skrypt LUA
+- Przekazanie parametru
+
+Parametry skryptu podzielone są na 2 grupy: **KEYS** klucze i **ARGV** argumenty. Przed nimi należy podać ilość parametrów.
+Parametry indeksowane są od 1.
+
+**Uwaga** Tablice w języku LUA rozpoczynają się od 1.
+
+~~~ lua
+EVAL "return redis.call('set',KEYS[1], ARGV[1])" 1 message Hello
+~~~
+
+~~~ lua
+EVAL "return redis.call('get',KEYS[1])" 1 foo 
+
+~~~
+
+- Wykonanie skryptu z pliku 
 
 ~~~ lua
 local msg = "Hello, world!"
 return msg
 ~~~
 
-- Wykonanie skryptu
-~~~
+~~~ bash
 redis-cli --eval hello.lua
 ~~~
+
 
 - Uruchomienie skryptu z pliku
 ~~~ 
 redis-cli EVAL "$(cat main.lua)" 0
+~~~
+
+
+- Załadowanie skryptu 
+~~~ 
+SCRIPT LOAD "return redis.call('set',KEYS[1], ARGV[1])"
+~~~
+Operacja zwróci SHA.
+
+- Wykonanie skryptu
+~~~
+EVALSHA {sha} 1 message "Hello World"
+~~~
+
+- Sorted Set
+~~~
+ZADD players 100 John 90 Jack 50 Andrew
+EVAL "return redis.call('zrange',KEYS[1], 0, ARGV[1])" 1 players -1
+~~~
+
+~~~
+EVAL "local myplayers = redis.call('zrange',KEYS[1], 0, ARGV[1]); return myplayers;" 1 players 3 
+~~~
+
+- Sprawdzenie czy skrypt istnieje
+~~~
+SCRIPT EXISTS {sha}
+~~~
+
+- Usunięcie skryptów
+~~~
+SCRIPT FLUSH
 ~~~
 
 ## Autoryzacja
