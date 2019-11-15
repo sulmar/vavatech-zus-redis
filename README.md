@@ -951,7 +951,10 @@ return msg
 redis-cli --eval hello.lua
 ~~~
 
-
+- Uruchomienie skryptu z pliku
+~~~ 
+redis-cli EVAL "$(cat main.lua)" 0
+~~~
 
 ## Autoryzacja
 
