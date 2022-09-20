@@ -1071,7 +1071,7 @@ SCRIPT FLUSH
 
 ## Autoryzacja
 
-- Ustawienie hasła
+- Ustawienie hasła dla użytkownika domyślnego (default)
 ~~~
 CONFIG SET requirepass P@ssw0rd
 ~~~
@@ -1081,10 +1081,25 @@ CONFIG SET requirepass P@ssw0rd
 AUTH P@ssw0rd
 ~~~
 
-
 - Usunięcie hasła
 ~~~
 CONFIG SET requirepass ""
+~~~
+
+- Sprawdzenie kim jestem
+~~~
+ACL WHOAMI
+~~~
+
+- Utworzenie nowego użytkownika
+~~~
+ACL SETUSER alice
+~~~
+
+
+- Dodanie hasła do użytkownika
+~~~
+ACL SETUSER alice on >P@ssw0rd
 ~~~
 
 
