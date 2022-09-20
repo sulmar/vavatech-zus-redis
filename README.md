@@ -1102,6 +1102,10 @@ ACL SETUSER alice
 ACL SETUSER alice on >P@ssw0rd
 ~~~
 
+- Dodanie uprawnień do użytkownika
+~~~
+ACL SETUSER alice +get +set
+~~~
 
 ## Masowe wstawianie danych
 
