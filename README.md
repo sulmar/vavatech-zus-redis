@@ -945,9 +945,12 @@ Umożliwia dodawanie i modyfikacje danych podczas tej operacji, ale ich zmiany n
 SAVE 60 1
 ~~~
 
-/etc/redis/redis.conf
-
 Oznacza, że backup będzie tworzony co 60 sekund jeśli przynajmniej jeden klucz został zmieniony.
+
+- Pobranie katalogu w którym znajduje się backup
+~~~
+CONFIG GET dir
+~~~
 
 
 ## Transakcje
