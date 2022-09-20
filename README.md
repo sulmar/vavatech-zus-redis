@@ -927,16 +927,27 @@ xread count 2 streams events 1572983745546-0
 
 ## Backup
 
-- Zapisanie danych na dysku (snapshoth)
+- Backup wybranej bazy danych na dysku (snapshoth)
 ~~~
 SAVE
 ~~~
-
 Powstanie plik _var/libs/redis/dump.rdb_
+SAVE uruchamiany jest synchronicznie i blokuje połączenia klientów. Niezalecany na środowisku produkcyjnym. Zamiast tego użyj BGSAVE
 
+- Backup asynchroniczny
 ~~~
-SAVE 60 1000
+BGSAVE
 ~~~
+Umożliwia dodawanie i modyfikacje danych podczas tej operacji, ale ich zmiany nie będą zapisane w tej migawce.
+
+- Backup automatyczny
+~~~
+SAVE 60 1
+~~~
+
+/etc/redis/redis.conf
+
+Oznacza, że backup będzie tworzony co 60 sekund jeśli przynajmniej jeden klucz został zmieniony.
 
 
 ## Transakcje
