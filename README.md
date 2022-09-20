@@ -952,6 +952,41 @@ Oznacza, że backup będzie tworzony co 60 sekund jeśli przynajmniej jeden kluc
 CONFIG GET dir
 ~~~
 
+## Diagnostyka
+
+- Ustawienie reguły
+~~~
+CONFIG SET maxmemory-policy allkeys-lfu
+~~~
+
+- Pobranie częstotliwości dostępu do klucza
+~~~
+OBJECT FREQ mykey
+~~~
+
+- Sprawdzenie rozmiaru klucza
+~~~
+MEMORY USAGE mykey
+~~~
+
+- Ustawienie maksykmalnej pamięci
+~~~
+CONFIG SET maxmemory 4mb
+~~~
+uwaga: sam silnik REDISa bez kluczy zajmuje 3mb.
+
+- Wyłączenie limitu pamięci
+~~~
+CONFIG SET maxmemory 0
+~~~
+
+- Sprawdzenie zajętości pamięci 
+~~~
+INFO memory
+~~~
+
+
+
 
 ## Transakcje
 
