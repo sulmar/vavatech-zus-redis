@@ -1317,7 +1317,66 @@ GET key2
 docker-compose down
 ~~~
 
+### Problemy (błąd CROSSSLOT)
 
+- Przykład
+~~~
+SADD user:512:following user:123 user:321 user:132
+CLUSTER KEYSLOT user:512:following 
+SADD user:512:followed_by user:123 user:132 
+CLUSTER KEYSLOT user:512:followed_by
+~~~
+
+#### Scenariusz 1
+~~~
+SINTER user:512:following user:512:followed_by
+~~~
+_(error) CROSSSLOT Keys in request don't hash to the same slot_
+
+- Przyczyna
+Klucze znajdują się w innych slotach.
+
+- Rozwiązanie
+~~~
+SADD user:{512}:following user:123 user:321 user:132
+CLUSTER KEYSLOT user:{512}:following 
+~~~
+
+{...} - oznacza, że tylko dla tej części klucza ma być obliczony hash, dzięki temu pozostała część nazwy klucza nie ma znaczenia
+
+~~~
+SADD user:{512}:followed_by user:123 user:132
+CLUSTER KEYSLOT user:{512}:followed_by
+~~~
+
+- Sprawdzenie
+~~~
+SINTER user:{512}:following user:{512}:followed_by
+~~~ 
+
+#### Scenariusz 2
+
+- Problem
+~~~
+SET foo Hello
+SET boo World
+MGET foo boo
+~~~
+
+_(error) CROSSSLOT Keys in request don't hash to the same slot_
+
+- Rozwiązanie
+~~~
+CLUSTER KEYSLOT foo
+CLUSTER KEYSLOT boo
+CLUSTER KEYSLOT f{oo}
+CLUSTER KEYSLOT b{oo}
+SET f{oo} Hello
+SET b{oo} World
+MGET f{oo} b{oo}
+~~~
+
+ 
 # InfluxDb
 
 docker-compose.yml
