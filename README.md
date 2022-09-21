@@ -1,5 +1,4 @@
 # REDIS
-
 ## Komendy
 
 ### Connection
@@ -1171,6 +1170,96 @@ cat names.txt | redis-cli --pipe
 
 ## Cluster
 
+### Linux
+
+
+1. Utwórz plik konfiguracyjny
+~~~ bash
+vim redis.conf        
+~~~ bash
+
+_redis.conf_
+~~~
+port 7000
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+appendonly yes
+~~~
+
+
+2. Utwórz podkatalogi
+~~~
+mkdir 7000 7001 7002 7003 7004 7005 7006 7007
+~~~
+
+3. Skopiuj pliki konfiguracyjny do poszczególnych katalogów
+~~~
+cp redis.conf 7000/redis.conf                                   
+...
+cp redis.conf 7007/redis.conf                                   
+~~~
+                         
+3. Zmień porty w poszczególnych plikach redis.conf
+~~~
+vim 7000/redis.conf
+...
+vim 7007/redis.conf
+~~~
+
+4. Uruchom serwery
+~~~
+cd 7000
+redis-server ./redis.conf  
+...
+cd 7007
+redis-server ./redis.conf  
+~~~
+
+5. Utwórz klaster
+~~~
+redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 \
+127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 127.0.0.1:7007 --cluster-replicas 1
+~~~
+
+
+6. Połącz się do redis
+~~~
+redis-cli -p 7000 -c   
+~~~
+
+7. Dodaj klucze
+~~~
+SET foo Hello
+SET boo World
+~~~
+
+Możesz zauważyć, że klucze zapisywane są w różnych slotach.
+
+- informacje o slotach (przestarzałe): 
+~~~
+CLUSTER SLOTS 
+~~~
+
+- informacje o slotach (od wersji 7.0)
+~~~
+CLUSTER SHARDS 
+~~~
+
+- informacje o działaniu klastra
+~~~
+CLUSTER INFO
+~~~
+
+- Obliczenie funkcji hash dla klucza o podanej nazwie
+~~~
+CLUSTER KEYSLOT foo
+~~~
+
+(klucz nie musi istnieć)
+
+
+### Docker
 
 https://itsmetommy.com/2018/05/24/docker-compose-redis-cluster/
 
