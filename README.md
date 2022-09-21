@@ -1222,8 +1222,7 @@ redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 \
 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 127.0.0.1:7007 --cluster-replicas 1
 ~~~
 
-
-6. Połącz się do redis
+6. Połącz się do jednego z wezłów master
 ~~~ bash
 redis-cli -p 7000 -c   
 ~~~
