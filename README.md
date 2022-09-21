@@ -1319,6 +1319,10 @@ docker-compose down
 
 ### Problemy (błąd CROSSSLOT)
 
+
+
+#### Scenariusz 1
+
 - Przykład
 ~~~
 SADD user:512:following user:123 user:321 user:132
@@ -1327,7 +1331,7 @@ SADD user:512:followed_by user:123 user:132
 CLUSTER KEYSLOT user:512:followed_by
 ~~~
 
-#### Scenariusz 1
+- Problem
 ~~~
 SINTER user:512:following user:512:followed_by
 ~~~
@@ -1356,10 +1360,14 @@ SINTER user:{512}:following user:{512}:followed_by
 
 #### Scenariusz 2
 
-- Problem
-~~~
+- Przykład
+~~~ 
 SET foo Hello
 SET boo World
+~~~ 
+
+- Problem
+~~~
 MGET foo boo
 ~~~
 
