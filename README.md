@@ -17,19 +17,23 @@
 
 | Komenda  | Opis   |
 |---|---|
-| **DEL** key  | Usunięcie klucza  |
-| **DUMP** key  | Pobranie serializowanej wartości klucza  |
 | **EXISTS** key  | Sprawdzenie czy klucz istnieje |
+| **RENAME** key newkey | Zmiana nazwy klucza |
+| **MOVE** key db | Przesunięcie klucza do innej bazy danych |
+| **DEL** key  | Usunięcie klucza  |
+| **RANDOMKEY** | Pobranie losowego klucza |
+| **DUMP** key  | Pobranie serializowanej wartości klucza  |
+| **TYPE** key  | Pobranie typu klucza |
+
 | **EXPIRE** key seconds  | Ustawienie czasu wygaśnięcia klucza |
 | **EXPIREAT** key timestamp  | Ustawienie daty wygaśnięcia klucza |
-| **KEYS** pattern | Wyszukiwanie kluczy według wzorca |
-| **MOVE** key db | Przesunięcie klucza do innej bazy danych |
-| **PERSIST** key | Wyłączenie wygasania klucza |
 | **TTL** key | Pobranie pozostałego czasu do wygaśnięcia klucza w sekundach |
 | **PTTL** key | Pobranie pozostałego czasu do wygaśnięcia klucza w milisekundach 
-| **RANDOMKEY** | Pobranie losowego klucza |
-| **RENAME** key newkey | Zmiana nazwy klucza |
-| **TYPE** key  | Pobranie typu klucza |
+| **PERSIST** key | Wyłączenie wygasania klucza |
+
+| **KEYS** pattern | Pobranie wszystkich nazw kluczy według wzorca |
+| **SCAN** cursor [MATCH pattern] [COUNT count] [TYPE type] | Pobranie określonej ilości nazw kluczy na podstawie wzorca lub typu |
+
 
 
 
@@ -62,7 +66,7 @@
 | **HKEYS** key  | Pobranie kluczy danego klucza |
 | **HVALS** key  | Pobranie wartości danego klucza |
 | **HINCRBY** key field increment  | Inkrementacja wartości pola |
-| **HDEL** key  | Usunięcie klucza |
+| **HDEL** key field | Usunięcie pola danego klucza |
 | **HEXISTS** key field | Sprawdzenie czy pole istnieje w danym kluczu |
 | **HSCAN** key cursor | Pobranie pól i wartości kluczy |
 | **HSTRLEN** key field | Pobranie długości wartości pola |
@@ -94,7 +98,7 @@
 | Komenda  | Opis   |
 |---|---|
 | **ZADD** key score member | Dodanie elementu do zbioru  |
-| **ZREM** key member | Usunięcie elementu do zbioru  |
+| **ZREM** key member | Usunięcie elementu ze zbioru  |
 | **ZINCRBY** key increment member | Zwiększego wartości klucza w zbiorze  |
 | **ZSCORE** key member | Pobranie wyniku elementu ze zbioru  |
 | **ZSCAN** key cursor | Pobranie elementów ze zbioru |
@@ -109,13 +113,13 @@
 
 | Komenda  | Opis   |
 |---|---|
-| **LPUSH** key value [value] | Wstawaienie elementu na początek listy  |
-| **RPUSH** key value [value] | Wstawaienie elementu na koniec listy |
+| **LPUSH** key value [value] | Dodanie elementu do listy od lewej strony (początek) |
+| **RPUSH** key value [value] | Dodanie elementu do listy od prawej strony (koniec) |
 | **LRANGE** key start stop  | Pobranie fragmentu elementów listy |
 | **LREM** key count value  | Usunięcie określonej ilości elementów z listy począwszy od podanej wartości |
-| **LPOP** key  | Pobranie i usunięcie elementu z góry |
-| **RPOP** key  | Pobranie i usunięcie elementu z dołu |
-| **RPOPLPUSH** key  | Przenosi ostatni element pomiędzy listami i zwraca go |
+| **LPOP** key  | Pobranie i usunięcie elementu z listy od lewej strony (początek) |
+| **RPOP** key  | Pobranie i usunięcie elementu z listy od prawej strony (koniec)|
+| **RPOPLPUSH** key  | Przeniesienie elementu pomiędzy listami |
 | **LLEN** key  | Pobranie ilości elementów listy |
 | **LTRIM** key start stop | Wycina fragment listy |
 
@@ -134,7 +138,7 @@
 | Komenda  | Opis   |
 |---|---|
 | **SETBIT** key offset value | Ustawienie bitu |
-| **SETBIT** key offset | Pobranie bitu |
+| **GETBIT** key offset | Pobranie bitu |
 | **BITOP** operation destkey key | Przetworzenie operacji bitowych |
 | **BITCOUNT** key [start end] | Obliczenie ilości ustawionych bitów na 1 |
 | **BITPOS** key [start] [end] | Pobranie pozycji bitu ustawionego na 1 |
