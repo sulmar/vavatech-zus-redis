@@ -13,7 +13,7 @@
 | **QUIT** | Zamknięcie połączenia |
 | **INFO** [section] | Wyświetlenie informacji |
 
-### Keys
+### Podstawowe
 
 | Komenda  | Opis   |
 |---|---|
