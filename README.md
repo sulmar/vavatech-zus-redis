@@ -1319,6 +1319,21 @@ GET key2
 docker-compose down
 ~~~
 
+### Problemy
+Próba wykonania komendy
+~~~
+SELECT 1
+~~~
+
+spowoduje wyświetlenie błędu:
+~~~
+ERR SELECT is not allowed in cluster mode
+~~~
+
+
+Redis Cluster does not support multiple databases like the standalone version of Redis. We only support database 0; the SELECT command is not allowed.
+
+
 ### Problemy (błąd CROSSSLOT)
 
 
